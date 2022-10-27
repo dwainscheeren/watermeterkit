@@ -13,7 +13,7 @@ substitutions:
   device_name: water_meter
   friendly_name: Water meter
   time_timezone: "Europe/Amsterdam"
-  watermeterkit_version: "1.2"
+  watermeterkit_version: "2.0"
   watermeterkit_model: "model-a"
 
 #Set up ESPHome
@@ -28,6 +28,9 @@ esphome:
 
 #WiFi Settings
 wifi:
+  #ssid: "your wifi ssid here"
+  #password: "your wifi password here"
+  
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Water meter Installation"
@@ -144,7 +147,9 @@ sensor:
       id: sensor_pulse_meter_total
       name: "${friendly_name} Total Consumption"
       icon: "mdi:cube-outline"
-      unit_of_measurement: "M3"
+      unit_of_measurement: "m³"
+      state_class: total_increasing
+      device_class: water
       accuracy_decimals: 3
       filters:
         - multiply: 0.001
