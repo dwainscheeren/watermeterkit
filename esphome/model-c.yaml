@@ -157,7 +157,11 @@ sensor:
       accuracy_decimals: 3
       filters:
         - multiply: 0.0005
-    pin: D5
+    pin:
+      number: D5
+      mode:
+        input: true
+        pullup: true
     on_value:
       then:
         - light.turn_on:
