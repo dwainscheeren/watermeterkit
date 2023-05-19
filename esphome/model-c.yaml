@@ -1,4 +1,4 @@
-# Water Meter
+# Watermeter
 #
 # THIS FILE IS ONLY FOR WATERMETERKIT MODEL C!
 #
@@ -12,30 +12,31 @@
 
 #Name of device
 substitutions:
-  device_name: water_meter
-  friendly_name: Water meter
+  name: watermeter
+  friendly_name: Watermeter
   time_timezone: "Europe/Amsterdam"
   watermeterkit_version: "2.0"
   watermeterkit_model: "model-c"
 
 #Set up ESPHome
 esphome:
-  name: watermeter
-  platform: ESP8266
-  board: d1_mini
-  
+  name: "${name}"
+  friendly_name: "${friendly_name}"
   project:
     name: dwainscheeren.watermeterkit
     version: "${watermeterkit_version}"
 
+esp8266:
+  board: d1_mini
+
 #WiFi Settings
 wifi:
-  #ssid: "your wifi ssid here"
-  #password: "your wifi password here"
+  #ssid: !secret wifi_ssid
+  #password: !secret wifi_password
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Water meter Installation"
+    ssid: "Watermeter Installation"
     password: "watermeter"
 
 #Enable fallback if WiFi is not found
@@ -58,7 +59,7 @@ status_led:
 switch:
   - platform: restart
     id: switch_restart
-    name: "${friendly_name} Restart"
+    name: Restart
     
 # Time for uptime
 time:
@@ -94,9 +95,9 @@ light:
     output: output_led_green
   
 sensor:
-  #Wifi signal
+  #WiFi signal
   - platform: wifi_signal
-    name: "${friendly_name} WiFi Signal"
+    name: WiFi Signal
     update_interval: 300s
     id: sensor_wifi_signal
   # Uptime Sensor
@@ -129,7 +130,7 @@ sensor:
   #
   - platform: template
     id: sensor_uptime_timestamp
-    name: "${friendly_name} Uptime"
+    name: Uptime
     device_class: "timestamp"
     accuracy_decimals: 0
     update_interval: never
@@ -140,7 +141,7 @@ sensor:
       return timestamp;
   - platform: pulse_meter
     id: sensor_pulse_meter
-    name: "${friendly_name} Current Usage"
+    name: Current Usage
     icon: "mdi:water-pump"
     unit_of_measurement: "L/min"
     timeout: 2min
@@ -149,7 +150,7 @@ sensor:
       - multiply: 0.5
     total:
       id: sensor_pulse_meter_total
-      name: "${friendly_name} Total Consumption"
+      name: Total Consumption
       icon: "mdi:cube-outline"
       unit_of_measurement: "m³"
       state_class: total_increasing
@@ -170,34 +171,34 @@ sensor:
   - platform: hdc1080
     temperature:
       id: sensor_temperature
-      name: "${friendly_name} Temperature"
+      name: Temperature
     humidity:
       id: sensor_humidity
-      name: "${friendly_name} Humidity"
+      name: Humidity
     update_interval: 600s
     
 text_sensor:
   # IP address #
   - platform: wifi_info
     ip_address:
-      name: "${friendly_name} IP address"
+      name: IP address
       icon: "mdi:network-outline"
     ssid:
-      name: "${friendly_name} Connected SSID"
+      name: Connected SSID
     bssid:
-      name: "${friendly_name} Connected BSSID"
+      name: Connected BSSID
   - platform: version
     id: text_sensor_version
-    name: "${friendly_name} ESPHome Version"
+    name: ESPHome Version
   - platform: template
     id: text_sensor_watermeterkit_version
-    name: "${friendly_name} Version"
+    name: Version
     update_interval: 5h
     lambda: |-
       return {"${watermeterkit_version}"};
   - platform: template
     id: text_sensor_watermeterkit_model
-    name: "${friendly_name} Model"
+    name: Model
     update_interval: 5h
     lambda: |-
       return {"${watermeterkit_model}"};
