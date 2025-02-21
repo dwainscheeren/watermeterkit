@@ -20,13 +20,13 @@ substitutions:
 
 #Set up ESPHome
 esphome:
-  name: watermeter
-  platform: ESP8266
-  board: d1_mini
-  
+  name: watermeter  
   project:
     name: dwainscheeren.watermeterkit
     version: "${watermeterkit_version}"
+
+esp8266:
+  board: d1_mini
 
 #WiFi Settings
 wifi:
