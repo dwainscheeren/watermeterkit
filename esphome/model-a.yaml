@@ -47,7 +47,8 @@ api:
 
 # Enable over the air updates
 ota:
-
+  platform: esphome
+  
 # Status LED of ESP
 status_led:
   pin: D3
